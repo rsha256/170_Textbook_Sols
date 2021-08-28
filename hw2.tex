@@ -1,0 +1,92 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Exercise]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Custom Commands
+\renewcommand{\qed}{\quad\qedsymbol}
+
+% prevent line break in inline mode
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Heading
+\lhead{Rahul Shah}
+\rhead{CS 170}
+\chead{\textbf{Textbook Solutions}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{mdframed}[backgroundcolor=blue!20]
+Chapter 0
+\end{mdframed}
+
+\begin{problem}{0.1}
+\textbf{In each of the following situations, indicate whether $f = O(g)$, or $f =\Omega(g)$, or both (in which case $f = \Theta(g)$).}
+\begin{enumerate}[(a)]
+    \item $n-100=\Theta(n-200)$, drop lower terms.
+    % b
+    \item $n^{1/2}= O(n^{2/3})$, $0.5 < 0.\bar 6\implies\displaystyle\lim_{n\to\infty}\frac{n^{1/2}}{n^{2/3}}=0$.
+    % c
+    \item $100n+\log{n}=\Theta(n+(\log{n})^2)$, drop lower terms, both are $\Theta(n)$.
+    % d
+    \item $n\log n=\Theta(10n\log 10n)$, $g$ can be written as $n(\log10+\log n)\in\Theta(n\log n)$.
+    \item $\log 2n=\Theta(\log 3n)$, as $\log 2+\log n$ and $\log 3+\log n$ are both $\Theta(\log n)$.
+    % f
+    \item $10\log n=\Theta(\log(n^2))$, as $\log(n^2)=2\log n$ and as $n\to\infty$ we drop coefficient factors.
+    % g
+    \item $n^{1.01}=\Omega(n\log^2 n)$ as $\displaystyle\lim_{n\to\infty}\frac{n^{0.01}}{\log^2 n}\to\infty$ as polynomial growth $\gg$ logarithmic growth.
+    % h
+    \item $\frac{n^2}{\log n}=\Omega(n(\log n)^2)$ as $\displaystyle\lim_{n\to\infty}\frac{n}{\log^2 n}\to\infty$ as polynomial growth $\gg$ logarithmic growth.
+    % i
+    \item $n^{0.1}=\Omega((\log n)^{10})$, as polynomial growth $\gg$ logarithmic growth.
+    % j
+    \item $(\log n)^{\log n}=\Omega(n/\log n)$, 
+        \begin{itemize}
+            \item $\displaystyle\lim_{n\to\infty} \frac{\log^{\log(n)}(n)}{n/\log{n}}=\lim_{n\to\infty} \frac{\log^{\log(n)+1}(n)}{n}\stackrel{\text{l'hopital's}}{=}\lim_{n\to\infty}\frac{\left(\frac{\mathrm d}{\mathrm{d}n}\left[\log^{\log(n)+1}(n)\right]\right)}{1}\to\infty$.
+        \end{itemize}
+    % k
+    \item $\sqrt n=\Omega((\log n)^3)$, as $\sqrt n=n^{0.5}$ and polynomial growth $\gg$ logarithmic growth.
+    % l
+    \item $n^{1/2}=O(5^{\log_2 n})$, 
+        \begin{itemize}
+            \item $5=2^{\log_2 5}\implies5^{\log_2 n}
+                =(2^{\log_2 5})^{\log_2 n}
+                =(2^{\log_2 n})^{\log_2 5}
+                =n^{\log_2 5}\approx n^{2.3}\gg n^{0.5}$.
+        \end{itemize}
+    % m
+    \item $n2^n=O(3^n)$ as $3^n = (1.5 \cdot 2)^n = 1.5^n \cdot 2^n$ and $1.5^n \gg n$ asymptotically.
+    % n
+    \item $2^n=\Theta(2^{n+1})$ as $2^{n+1}=2\cdot2^{n}$ and we drop coefficients as $n\to\infty$.
+    % o
+    \item $n!=\Omega(2^n)$, as factorial $\gg$ exponential (can be proved via induction).
+    % p
+    \item $(\log n)^{\log n}=\Omega(2^{{(\log_2 n)}^2})$, the RHS = $n^{(\log_2 n)}$
+    % q
+    \item $\displaystyle\sum_{i=1}^n i^k = O(n^{k+1})$, each summation term increases $\therefore n^k$ dominates and $n^k\ll n^{k+1},$ akin to $n^2\land n^3$.
+\end{enumerate}
+\end{problem}
+\end{document}
