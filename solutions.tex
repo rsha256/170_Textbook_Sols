@@ -8,6 +8,7 @@
 \usepackage[shortlabels]{enumitem}
 \usepackage{indentfirst}
 \usepackage{hyperref}
+\usepackage{multicol} % for induction proofs :P
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -44,49 +45,146 @@ Chapter 0
 \end{mdframed}
 
 \begin{problem}{0.1}
-\textbf{In each of the following situations, indicate whether $f = O(g)$, or $f =\Omega(g)$, or both (in which case $f = \Theta(g)$).}
-\begin{enumerate}[(a)]
-    \item $n-100=\Theta(n-200)$, drop lower terms.
-    % b
-    \item $n^{1/2}= O(n^{2/3})$, $0.5 < 0.\bar 6\implies\displaystyle\lim_{n\to\infty}\frac{n^{1/2}}{n^{2/3}}=0$.
-    % c
-    \item $100n+\log{n}=\Theta(n+(\log{n})^2)$, drop lower terms, both are $\Theta(n)$.
-    % d
-    \item $n\log n=\Theta(10n\log 10n)$, $g$ can be written as $n(\log10+\log n)\in\Theta(n\log n)$.
-    \item $\log 2n=\Theta(\log 3n)$, as $\log 2+\log n$ and $\log 3+\log n$ are both $\Theta(\log n)$.
-    % f
-    \item $10\log n=\Theta(\log(n^2))$, as $\log(n^2)=2\log n$ and as $n\to\infty$ we drop coefficient factors.
-    % g
-    \item $n^{1.01}=\Omega(n\log^2 n)$ as $\displaystyle\lim_{n\to\infty}\frac{n^{0.01}}{\log^2 n}\to\infty$ as polynomial growth $\gg$ logarithmic growth.
-    % h
-    \item $\frac{n^2}{\log n}=\Omega(n(\log n)^2)$ as $\displaystyle\lim_{n\to\infty}\frac{n}{\log^2 n}\to\infty$ as polynomial growth $\gg$ logarithmic growth.
-    % i
-    \item $n^{0.1}=\Omega((\log n)^{10})$, as polynomial growth $\gg$ logarithmic growth.
-    % j
-    \item $(\log n)^{\log n}=\Omega(n/\log n)$, 
-        \begin{itemize}
-            \item $\displaystyle\lim_{n\to\infty} \frac{\log^{\log(n)}(n)}{n/\log{n}}=\lim_{n\to\infty} \frac{\log^{\log(n)+1}(n)}{n}\stackrel{\text{l'hopital's}}{=}\lim_{n\to\infty}\frac{\left(\frac{\mathrm d}{\mathrm{d}n}\left[\log^{\log(n)+1}(n)\right]\right)}{1}\to\infty$.
-        \end{itemize}
-    % k
-    \item $\sqrt n=\Omega((\log n)^3)$, as $\sqrt n=n^{0.5}$ and polynomial growth $\gg$ logarithmic growth.
-    % l
-    \item $n^{1/2}=O(5^{\log_2 n})$, 
-        \begin{itemize}
-            \item $5=2^{\log_2 5}\implies5^{\log_2 n}
-                =(2^{\log_2 5})^{\log_2 n}
-                =(2^{\log_2 n})^{\log_2 5}
-                =n^{\log_2 5}\approx n^{2.3}\gg n^{0.5}$.
-        \end{itemize}
-    % m
-    \item $n2^n=O(3^n)$ as $3^n = (1.5 \cdot 2)^n = 1.5^n \cdot 2^n$ and $1.5^n \gg n$ asymptotically.
-    % n
-    \item $2^n=\Theta(2^{n+1})$ as $2^{n+1}=2\cdot2^{n}$ and we drop coefficients as $n\to\infty$.
-    % o
-    \item $n!=\Omega(2^n)$, as factorial $\gg$ exponential (can be proved via induction).
-    % p
-    \item $(\log n)^{\log n}=\Omega(2^{{(\log_2 n)}^2})$, the RHS = $n^{(\log_2 n)}$
-    % q
-    \item $\displaystyle\sum_{i=1}^n i^k = O(n^{k+1})$, each summation term increases $\therefore n^k$ dominates and $n^k\ll n^{k+1},$ akin to $n^2\land n^3$.
-\end{enumerate}
+    \textbf{In each of the following situations, indicate whether $f = O(g)$, or $f =\Omega(g)$, or both (in which case $f = \Theta(g)$).}
+    
+    \begin{enumerate}[(a)]
+        \item $n-100=\Theta(n-200)$, drop lower terms.
+        % b
+        \item $n^{1/2}= O(n^{2/3})$, $0.5 < 0.\bar 6\implies\displaystyle\lim_{n\to\infty}\frac{n^{1/2}}{n^{2/3}}=0$.
+        % c
+        \item $100n+\log{n}=\Theta(n+(\log{n})^2)$, drop lower terms, both are $\Theta(n)$.
+        % d
+        \item $n\log n=\Theta(10n\log 10n)$, $g$ can be written as $10n(\log10+\log n)\in\Theta(n\log n)$.
+        \item $\log 2n=\Theta(\log 3n)$, as $\log 2+\log n$ and $\log 3+\log n$ are both $\Theta(\log n)$.
+        % f
+        \item $10\log n=\Theta(\log(n^2))$, as $\log(n^2)=2\log n$ and as $n\to\infty$ we drop coefficient factors.
+        % g
+        \item $n^{1.01}=\Omega(n\log^2 n)$ as $\displaystyle\lim_{n\to\infty}\frac{n^{0.01}}{\log^2 n}\to\infty$ as polynomial growth $\gg$ logarithmic growth.
+        % h
+        \item $\frac{n^2}{\log n}=\Omega(n(\log n)^2)$ as $\displaystyle\lim_{n\to\infty}\frac{n}{\log^2 n}\to\infty$ as polynomial growth $\gg$ logarithmic growth.
+        % i
+        \item $n^{0.1}=\Omega((\log n)^{10})$, as polynomial growth $\gg$ logarithmic growth.
+        % j
+        \item $(\log n)^{\log n}=\Omega(n/\log n)$, 
+            \begin{itemize}
+                \item $\displaystyle\lim_{n\to\infty} \frac{\log^{\log(n)}(n)}{n/\log{n}}
+                =\lim_{n\to\infty} \frac{\log^{\log(n)+1}(n)}{n}
+                \stackrel{\text{l'hopital's}}{=}\lim_{n\to\infty}\frac{\left(\frac{\mathrm d}{\mathrm{d}n}\left[\log^{\log(n)+1}(n)\right]\right)}{1}
+                \to\infty$.
+            \end{itemize}
+        % k
+        \item $\sqrt n=\Omega((\log n)^3)$, as $\sqrt n=n^{0.5}$ and polynomial growth $\gg$ logarithmic growth.
+        % l
+        \item $n^{1/2}=O(5^{\log_2 n})$, 
+            \begin{itemize}
+                \item $5=2^{\log_2 5}\implies5^{\log_2 n}
+                    =(2^{\log_2 5})^{\log_2 n}
+                    =(2^{\log_2 n})^{\log_2 5}
+                    =n^{\log_2 5}\approx n^{2.3}\gg n^{0.5}$.
+            \end{itemize}
+        % m
+        \item $n2^n=O(3^n)$ as $3^n = (1.5 \cdot 2)^n = 1.5^n \cdot 2^n$ and $1.5^n \gg n$ asymptotically.
+        % n
+        \item $2^n=\Theta(2^{n+1})$ as $2^{n+1}=2\cdot2^{n}$ and we drop coefficients as $n\to\infty$.
+        % o
+        \item $n!=\Omega(2^n)$, as factorial $\gg$ exponential (can be proved via induction).
+        % p
+        \item $(\log n)^{\log n}=\Omega(2^{{(\log_2 n)}^2})$, the RHS = $n^{(\log_2 n)}$
+        % q
+        \item $\displaystyle\sum_{i=1}^n i^k = O(n^{k+1})$, each summation term increases $\therefore n^k$ dominates and $n^k\ll n^{k+1},$ akin to $n^2\land n^3$.
+    \end{enumerate}
 \end{problem}
+
+\newpage
+\begin{problem}{0.2}
+    \textbf{Show that, if $c$ is a positive real number, then $g(n) = 1 + c + c^2 + \cdots + c^n$ is:}
+
+    \[
+        g(n) 
+        = 1 + c + c^2 + \cdots + c^n 
+        = \displaystyle\sum_{i=0}^n c^i
+        = \frac{c^{n+1}-1}{c-1}, 
+        (\forall c\neq 1)
+    \]
+
+    \begin{enumerate}[(a)]
+        \item If $c<1,$ 
+        then $\displaystyle\lim_{n\to\infty}g(n)
+        =\frac{0-1}{c-1}
+        =\frac{1}{1-c}
+        \implies \boxed{g\in\Theta(1),} \  (\forall c < 1)$.
+        % b
+        \item If $c=1,$ 
+        then $g(n) 
+        = 1 + c + c^2 + \cdots + c^n
+        = 1 + 1 + 1^2 + \cdots + 1^n
+        = n + 1
+        \implies \boxed{g\in\Theta(n),} \  (\forall c=1)$.
+        % c
+        \item If $c>1,$ 
+        then $\displaystyle\lim_{n\to\infty}g(n)
+        =\lim_{n\to\infty}\frac{c^{n+1}}{c}
+        = c^n
+        \implies \boxed{g\in\Theta(c^n),} \  (\forall c > 1)$.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}{0.3}
+    \textbf{The Fibonacci numbers $F_0, F_1, F_2, \ldots,$ are defined by the rule:}
+    \[
+        F_0=0, \ \ \ \ \ 
+        F_1=1, \ \ \ \ 
+        F_n=F_{n-1}+F_{n-2}.
+    \]
+
+    \begin{enumerate}[(a)]
+        \item \textbf{Use induction to prove that $F_n \geq 2^{0.5n}, \ (\forall n \geq 6)$}
+        \\
+        Base Case(s):
+        $F_6 = 8 \geq 2^{0.5 \cdot 6} = 2^{\frac{6}{2}} = 2^3 = 8. \ \ F_7=13 \geq 2^{3.5}. \ \ F_8=21 \geq 2^4.$
+        \\
+        Inductive Hypothesis:
+        Assume $F_k\geq2^{0.5k}$ for some $n=k,$ where $k\geq6$.
+        \\
+        Inductive Step:
+        WTS: $F_k\geq2^{0.5k}
+        \implies
+        F_{k+1}\geq2^{0.5(k+1)}
+        =2^{0.5k+0.5}$
+        \\
+        $F_{k+1}=F_{k}+F_{k-1}
+        > 2\cdot F_{k-1}
+        \geq 2\cdot 2^{0.5(k-1)}
+        = 2^{0.5k-0.5+1} 
+        = \boxed{2^{0.5k+0.5}} \ .$
+        \qed
+        
+        \item \textbf{Find a constant $c < 1$ such that $F_n \leq 2^{cn}, \  (\forall n \geq 0)$.}
+        \\
+        $F_n = F_{n-1} + F_{n-2} 
+        \leq 2^{(c(n-1)} + 2^{(c(n-2)} 
+        \leq 2^{(cn)} \cdot 2^{-c} + 2^{(cn)} \cdot 2^{(-2c)} 
+        \leq 2^{(cn)} (2^{-c} + (2^{-c})^2)$
+        
+        $\therefore (2^{-c} + (2^{-c})^2) \leq 1$. If we look at specific case of equality with the substitution $x=2^{-c}$, we get the following: $x^2 + x - 1 = 0$
+        which has roots at $x = \frac{-1 \pm \sqrt(5)}{2}$ per the quadratic formula.
+        \\
+        Note that we take the positive root as the logarithm (used below) is only defined for inputs $>0$.
+        \[
+            x=2^{-c}
+            \implies
+            c = -\log_2 x
+        \]
+        \[
+            \boxed{\text{This holds true }\forall c \ \text{ s.t. } 0.694242 \leq c < 1}.
+        \]
+        
+        \item $F_n=\Omega(2^{cn})\implies$
+        The boundary condition is when $c=-\log_2(\frac12 (-1 + \sqrt(5)))$
+        \[
+            \boxed{c \approx 0.694242}
+        \]
+    \end{enumerate}
+\end{problem}
+
 \end{document}
