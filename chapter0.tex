@@ -8,13 +8,15 @@
 \usepackage[shortlabels]{enumitem}
 \usepackage{indentfirst}
 \usepackage{hyperref}
-\usepackage{multicol} % for induction proofs :P
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
     filecolor=magenta,      
     urlcolor=blue,
 }
+\usepackage{multicol} % for induction proofs :P
+\usepackage{minted} % code font
+
 
 
 \pagestyle{fancy}
@@ -83,13 +85,15 @@ Chapter 0
                     =n^{\log_2 5}\approx n^{2.3}\gg n^{0.5}$.
             \end{itemize}
         % m
-        \item $n2^n=O(3^n)$ as $3^n = (1.5 \cdot 2)^n = 1.5^n \cdot 2^n$ and $1.5^n \gg n$ asymptotically.
+        \item $n2^n=O(3^n)$ as $3^n = (1.5 \cdot 2)^n = 1.5^n \cdot 2^n$ and $n\ll 1.5^n$ asymptotically.
         % n
         \item $2^n=\Theta(2^{n+1})$ as $2^{n+1}=2\cdot2^{n}$ and we drop coefficients as $n\to\infty$.
         % o
         \item $n!=\Omega(2^n)$, as factorial $\gg$ exponential (can be proved via induction).
         % p
-        \item $(\log n)^{\log n}=\Omega(2^{{(\log_2 n)}^2})$, the RHS = $n^{(\log_2 n)}$
+        \item $(\log n)^{\log n}=O(2^{{(\log_2 n)}^2})$, the RHS = $n^{(\log_2 n)}$ and $\log n\ll n
+        \implies
+        (\log n)^{\log n}\ll n^{\log n}$.
         % q
         \item $\displaystyle\sum_{i=1}^n i^k = O(n^{k+1})$, each summation term increases $\therefore n^k$ dominates and $n^k\ll n^{k+1},$ akin to $n^2\land n^3$.
     \end{enumerate}
@@ -179,11 +183,81 @@ Chapter 0
             \boxed{\text{This holds true }\forall c \ \text{ s.t. } 0.694242 \leq c < 1}.
         \]
         
-        \item $F_n=\Omega(2^{cn})\implies$
-        The boundary condition is when $c=-\log_2(\frac12 (-1 + \sqrt(5)))$
+        \item $F_n=\Omega(2^{cn})\implies\exists k\in\mathbb Z^+: F_n \geq k\cdot 2^{cn}$.
+        WLOG equality holds when $c=-\log_2(\frac12 (-1 + \sqrt(5)))$
         \[
+            \implies
             \boxed{c \approx 0.694242}
         \]
+    \end{enumerate}
+\end{problem}
+
+\newpage
+\begin{problem}{0.4}
+    In general, to compute $F_n$, it suffices to raise the following $2\times 2$ matrix, called $X$, to the $n$th power:
+    \[
+        \begin{bmatrix}
+                F_n \\
+                F_{n+1}
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+                0 & 1 \\
+                1 & 1
+        \end{bmatrix}^n
+        \cdot
+        \begin{bmatrix}
+                F_0 \\
+                F_1
+        \end{bmatrix}.
+    \]
+    \begin{enumerate}[(a)]
+        \item \textbf{Show that two 2 × 2 matrices can be multiplied via 4 additions \& 8 multiplications:}
+        \\
+        For $2\times2$ matrices:
+        \[
+            \begin{bmatrix}
+                a & b \\
+                c & d
+            \end{bmatrix}
+            \begin{bmatrix}
+                e & f \\
+                g & h
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                a\cdot e + b\cdot g & a\cdot f + b\cdot h \\
+                c\cdot e + d\cdot g & c\cdot f + d\cdot h
+            \end{bmatrix}
+        \]
+    which clearly has four additions (denoted by $+$) and eight multiplications (denoted by $\cdot$).
+    
+    \vspace{5 mm}
+    But how many matrix multiplications does it take to compute $X^n$?
+
+    \item \textbf{Show that $O(\log n)$ matrix multiplications suffice for computing $X^n$.}
+    \\
+    Repeated Squaring Algorithm:
+    \[
+        X^n = 
+        \begin{cases}
+            (X^{\frac n2})^2 &\text{if } n \text{ is even} \\
+            X\cdot X^{n-1} &\text{if } n \text{ is odd}
+        \end{cases}
+    \]
+    Note that this is applied recursively with $n$ guaranteed to be reduced by half within every $2$ iterations $\implies\text{ Repeated Squaring Algorithm }\in O(\log n)$.
+
+    \item \textbf{Show that all intermediate results of \mintinline{python}{fib3} are $O(n)$ bits long.}
+    \\
+    Adding two numbers that have $n$ bits will result in at most an $n+1$ bit number.
+
+    \item \textbf{Prove that the running time of \mintinline{python}{fib3} is $O(M(n)\log n)$.}
+    \\
+    There are $\log n$ multiplications, each of which is $M(n)\implies$ \mintinline{python}{fib3} $\in O(M(n)\log n)$.
+
+    \item \textbf{Can you prove that the running time of \mintinline{python}{fib3} is $O(M(n))$?}
+    \\
+    Yes!
     \end{enumerate}
 \end{problem}
 
