@@ -1,49 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Do not alter this block (unless you're familiar with LaTeX
-\documentclass{article}
-\usepackage[margin=1in]{geometry} 
-\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
-\usepackage{xcolor}
-\usepackage{mdframed}
-\usepackage[shortlabels]{enumitem}
-\usepackage{indentfirst}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=blue,
-}
-\usepackage{multicol} % for induction proofs :P
-\usepackage{minted} % code font
-
-\pagestyle{fancy}
-
-
-\newenvironment{problem}[2][Exercise]
-    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
-    {  \end{mdframed}}
-
-% Custom Commands
-\renewcommand{\qed}{\quad\qedsymbol}
-
-% prevent line break in inline mode
-\binoppenalty=\maxdimen
-\relpenalty=\maxdimen
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Heading
-\lhead{Rahul Shah}
-\rhead{CS 170}
-\chead{\textbf{Textbook Solutions}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{document}
-
-\begin{mdframed}[backgroundcolor=blue!20]
-Chapter 0 | Email any errors to rsha256@berkeley.edu
-\end{mdframed}
-
+\section{Chapter 0}
 \begin{problem}{0.1}
     \textbf{In each of the following situations, indicate whether $f = O(g)$, or $f =\Omega(g)$, or both (in which case $f = \Theta(g)$).}
     
@@ -258,5 +213,3 @@ Chapter 0 | Email any errors to rsha256@berkeley.edu
     Yes!
     \end{enumerate}
 \end{problem}
-
-\end{document}

@@ -1,50 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Do not alter this block (unless you're familiar with LaTeX
-\documentclass{article}
-\usepackage[margin=1in]{geometry} 
-\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
-\usepackage{xcolor}
-\usepackage{mdframed}
-\usepackage[shortlabels]{enumitem}
-\usepackage{indentfirst}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=blue,
-}
-\usepackage{multicol} % for induction proofs :P
-\usepackage{minted} % code font
-\usepackage{listings}
-\lstset{basicstyle=\ttfamily,breaklines=true}
-
-\pagestyle{fancy}
-
-
-\newenvironment{problem}[2][Exercise]
-    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
-    {  \end{mdframed}}
-
-% Custom Commands
-\renewcommand{\qed}{\quad\qedsymbol}
-
-% prevent line break in inline mode
-\binoppenalty=\maxdimen
-\relpenalty=\maxdimen
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Heading
-\lhead{Rahul Shah and Sherry Fan}
-\rhead{CS 170}
-\chead{\textbf{Textbook Solutions}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{document}
-
-\begin{mdframed}[backgroundcolor=blue!20]
-Chapter 3 | Email any errors to rsha256@berkeley.edu
-\end{mdframed}
+\section{Chapter 3}
 
 \begin{problem}{3.5}
     \textbf{Show how to reverse a graph in linear time}.
@@ -147,5 +101,3 @@ Chapter 3 | Email any errors to rsha256@berkeley.edu
     \\
     Equivalence relations partition a set S into disjoint groups such that any two members of a group are related, and any members not in the same group are not related. Thus, the equivalence relation of connectedness partitions $V$ into disjoint sets, in which each vertex is connected to all other vertices in that set.
 \end{problem}
-
-\end{document}

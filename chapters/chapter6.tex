@@ -1,51 +1,5 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Do not alter this block (unless you're familiar with LaTeX
-\documentclass{article}
-\usepackage[margin=1in]{geometry} 
-\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
-\usepackage{xcolor}
-\usepackage{mdframed}
-\usepackage[shortlabels]{enumitem}
-\usepackage{indentfirst}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=blue,
-}
-\usepackage{multicol} % for induction proofs :P
-\usepackage{minted} % code font
-\usepackage{listings}
+\section{Chapter 6}
 
-
-\pagestyle{fancy}
-
-
-\newenvironment{problem}[2][Exercise]
-    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
-    {  \end{mdframed}}
-
-% Custom Commands
-\renewcommand{\qed}{\quad\qedsymbol}
-
-% prevent line break in inline mode
-\binoppenalty=\maxdimen
-\relpenalty=\maxdimen
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Heading
-\lhead{Rahul Shah and Sherry Fan}
-\rhead{CS 170}
-\chead{\textbf{Textbook Solutions}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{document}
-
-\begin{mdframed}[backgroundcolor=blue!20]
-Chapter 6 | Email any errors to rsha256@berkeley.edu
-\end{mdframed}
- 
 \begin{problem}{6.17}
     \textbf{Given an umlimited supply of coins of denominations $x_1, x_2, ... x_n$, give a dynamic programming algorithm to decide if it is possible to make change for some quantity $V$}. \\
     Subproblem: $f(i, v)$ = if it is possible to make change for $v$ using denominations $x_1, x_2, ... x_i$ \\
@@ -98,9 +52,9 @@ Chapter 6 | Email any errors to rsha256@berkeley.edu
     Solution: $\max(A(n, m), B(n, m), C(n, m))$ \\
     Base case: $A(0, 0) = 0; B(i, 0) = c_0 + c_1 * i; C(0, j) = c_0 + c_1 * j$ \\
     Recurrences: \\
-    $A(i, j) = max(A(i - 1, j - 1) + \delta(x[i], y[j]), B(i - 1, j - 1) + \delta(x[i], y[j]), C(i - 1, j - 1) + \delta(x[i], y[j])$ \\
-    $B(i,  j) = max(A(i - 1, j) + c_0 + c_1, B(i - 1, j) + c_1)$ \\
-    $C(i,  j) = max(A(i - 1, j) + c_0 + c_1, C(i - 1, j) + c_1)$ \\
+    $A(i, j) = \max(A(i - 1, j - 1) + \delta(x[i], y[j]), B(i - 1, j - 1) + \delta(x[i], y[j]), C(i - 1, j - 1) + \delta(x[i], y[j])$ \\
+    $B(i,  j) = \max(A(i - 1, j) + c_0 + c_1, B(i - 1, j) + c_1)$ \\
+    $C(i,  j) = \max(A(i - 1, j) + c_0 + c_1, C(i - 1, j) + c_1)$ \\
     Time complexity: $O(mn)$ \\
     Space complexity: $O(\min(m, n))$
 \end{problem}
@@ -114,5 +68,3 @@ Chapter 6 | Email any errors to rsha256@berkeley.edu
     Time complexity: $O(mn)$ \\
     Space complexity: $O(\min(m, n))$
 \end{problem}
- 
-\end{document}

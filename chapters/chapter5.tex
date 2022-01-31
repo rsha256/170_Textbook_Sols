@@ -1,50 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Do not alter this block (unless you're familiar with LaTeX
-\documentclass{article}
-\usepackage[margin=1in]{geometry} 
-\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
-\usepackage{xcolor}
-\usepackage{mdframed}
-\usepackage[shortlabels]{enumitem}
-\usepackage{indentfirst}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=blue,
-}
-\usepackage{multicol} % for induction proofs :P
-\usepackage{minted} % code font
-\usepackage{listings}
-\lstset{basicstyle=\ttfamily,breaklines=true}
-
-\pagestyle{fancy}
-
-
-\newenvironment{problem}[2][Exercise]
-    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
-    {  \end{mdframed}}
-
-% Custom Commands
-\renewcommand{\qed}{\quad\qedsymbol}
-
-% prevent line break in inline mode
-\binoppenalty=\maxdimen
-\relpenalty=\maxdimen
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Heading
-\lhead{Rahul Shah and Sherry Fan}
-\rhead{CS 170}
-\chead{\textbf{Textbook Solutions}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{document}
-
-\begin{mdframed}[backgroundcolor=blue!20]
-Chapter 5 | Email any errors to rsha256@berkeley.edu
-\end{mdframed}
+\section{Chapter 5}
  
 \begin{problem}{5.16}
 \textbf{Consider a distribution over n outcomes with probabilities $p_1, p_2, ..., p_n$ where each outcome occurs $mp_i$ times. Assume that each is a power of 2, and prove that Huffman encoding creates a sequence of length $\sum_{i=1}^{n}mp_i \log \frac{1}{p_i}.$}
@@ -149,5 +103,3 @@ Consider a diagram with two rows of elements, where the sets are the top and bot
 \\
 However, the greedy algorithm will first take the set with $n / 2 + 1$ elements, then the set with $n / 4 + 1$, and then the set with $n / 8 + 1$, and so on until it chooses the set with $2 = 2^0 + 1$ elements. $n / 2 + 1 = 2^{\log_2 n - 1} + 1$, so the greedy uses a total of $\log n$ sets.
 \end{problem}
-
-\end{document}

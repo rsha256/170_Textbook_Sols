@@ -1,51 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Do not alter this block (unless you're familiar with LaTeX
-\documentclass{article}
-\usepackage[margin=1in]{geometry} 
-\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
-\usepackage{xcolor}
-\usepackage{mdframed}
-\usepackage[shortlabels]{enumitem}
-\usepackage{indentfirst}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=blue,
-}
-\usepackage{multicol} % for induction proofs :P
-\usepackage{minted} % code font
-
-
-
-\pagestyle{fancy}
-
-
-\newenvironment{problem}[2][Exercise]
-    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
-    {  \end{mdframed}}
-
-% Custom Commands
-\renewcommand{\qed}{\quad\qedsymbol}
-
-% prevent line break in inline mode
-\binoppenalty=\maxdimen
-\relpenalty=\maxdimen
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Heading
-\lhead{Rahul Shah}
-\rhead{CS 170}
-\chead{\textbf{Textbook Solutions}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{document}
-
-\begin{mdframed}[backgroundcolor=blue!20]
-Chapter 1 | Email any errors to rsha256@berkeley.edu
-\end{mdframed}
-
+\section{Chapter 1}
 \begin{problem}{1.1}
     \textbf{WTS: In any base $b\geq2,$ the sum of any three single-digit numbers is at most 2 digits long.}
     \\
@@ -144,7 +97,7 @@ Chapter 1 | Email any errors to rsha256@berkeley.edu
 \begin{problem}{1.11}
     \textbf{Is $4^{1536} - 9^{4824}$ divisible by $35$?}
     \\
-    We can use CRT:
+    Yes. We can use CRT to show:
     \[
         4^{1536} - 9^{4824} \equiv (-1)^{1536} - (-1)^{4824} \pmod 5
     \]
@@ -247,5 +200,3 @@ Chapter 1 | Email any errors to rsha256@berkeley.edu
     \\
     $1/p$. (This is a geometric distribution).
 \end{problem}
-
-\end{document}

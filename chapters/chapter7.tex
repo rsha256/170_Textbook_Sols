@@ -1,50 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Do not alter this block (unless you're familiar with LaTeX
-\documentclass{article}
-\usepackage[margin=1in]{geometry} 
-\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
-\usepackage{xcolor}
-\usepackage{mdframed}
-\usepackage[shortlabels]{enumitem}
-\usepackage{indentfirst}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=blue,
-}
-\usepackage{multicol} % for induction proofs :P
-\usepackage{minted} % code font
-\usepackage{listings}
-\lstset{basicstyle=\ttfamily,breaklines=true}
-
-\pagestyle{fancy}
-
-
-\newenvironment{problem}[2][Exercise]
-    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
-    {  \end{mdframed}}
-
-% Custom Commands
-\renewcommand{\qed}{\quad\qedsymbol}
-
-% prevent line break in inline mode
-\binoppenalty=\maxdimen
-\relpenalty=\maxdimen
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Heading
-\lhead{Rahul Shah and Sherry Fan}
-\rhead{CS 170}
-\chead{\textbf{Textbook Solutions}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{document}
-
-\begin{mdframed}[backgroundcolor=blue!20]
-Chapter 7 | Email any errors to sherryfansf@berkeley.edu
-\end{mdframed}
+\section{Chapter 7}
 
 \begin{problem}{7.25}
     \textbf{Write the max flow problem as a linear program.} \\
@@ -118,4 +72,3 @@ Take the edge $e = (u, v)$ with minimum flow $f_e$. If it is part of a cycle, re
 \textbf{Show that increasing the flow along the fattest path allows Ford-Fulkerson to terminate in at most O($|E| \log F$) iterations}. \\
 Suppose the max flow has size $|F|$. Let $F_k$ be the amount of flow left to reach the max flow, in the $k$th iteration. Since the max flow can be decomposed into at most $|E|$ paths, the fattest path must have flow greater than or equal to $|F| / |E|$. Pushing flow along this path results in $F_{k + 1} = (1 - 1 / |E|)F_k$. Using induction, we can see that $F_{k}$ reaches 0 when $k = E log F$, meaning we terminate after that many iterations.
 \end{problem}
-\end{document}

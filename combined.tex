@@ -1,0 +1,58 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{multicol} % for induction proofs :P
+\usepackage{minted} % code font
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Exercise]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Custom Commands
+\renewcommand{\qed}{\quad\qedsymbol}
+
+% prevent line break in inline mode
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Heading
+\lhead{Sherry Fan \& Rahul Shah}
+\rhead{CS 170}
+\chead{\textbf{Textbook Solutions}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{mdframed}[backgroundcolor=blue!20]
+Table of Contents | Email any errors to rsha256@berkeley.edu, sherryfansf@berkeley.edu
+\end{mdframed}
+
+
+    \tableofcontents
+
+    \include{chapters/chapter0} % Note that I use include over input to force new page!
+    \include{chapters/chapter1}
+    \include{chapters/chapter2}
+    \include{chapters/chapter3}
+    \include{chapters/chapter4}
+    \include{chapters/chapter5}
+    \include{chapters/chapter6}
+    \include{chapters/chapter7}
+\end{document}
