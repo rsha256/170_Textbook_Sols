@@ -1,0 +1,153 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{multicol} % for induction proofs :P
+\usepackage{minted} % code font
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,breaklines=true}
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Exercise]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Custom Commands
+\renewcommand{\qed}{\quad\qedsymbol}
+
+% prevent line break in inline mode
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Heading
+\lhead{Rahul Shah and Sherry Fan}
+\rhead{CS 170}
+\chead{\textbf{Textbook Solutions}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{mdframed}[backgroundcolor=blue!20]
+Chapter 5 | Email any errors to rsha256@berkeley.edu
+\end{mdframed}
+ 
+\begin{problem}{5.16}
+\textbf{Consider a distribution over n outcomes with probabilities $p_1, p_2, ..., p_n$ where each outcome occurs $mp_i$ times. Assume that each is a power of 2, and prove that Huffman encoding creates a sequence of length $\sum_{i=1}^{n}mp_i \log \frac{1}{p_i}.$}
+\\
+\\
+WLOG, assume that $p_1, ..., p_n$ are ordered in decreasing order. We use induction on the length of the sequence.
+\\
+Base case: In a case with a single letter, it is clear that $p_1 = 1$ and 
+\[
+    \sum_{i=1}^{n}mp_i \log \frac{1}{p_i}
+\]
+\[
+    = 1 * log(1) = 0
+\]
+This holds since a sequence of the exact same letter can be implicitly represented with 0 bits.
+\\
+Suppose this holds for a distribution of $n - 1$ letters. We now consider a distribution on $n$ letters.
+\\
+Take the lowest-frequency letter with frequency $\frac{1}{2^{k}}$; there must be another letter with the same frequency (in order to sum to 1). Thus, merge these two to form a "super-letter" with probability $\frac{1}{2^{k - 1}}$. You now have $n - 1$ letters where the frequencies are powers of two: $p_1, p_2, ..., 2p_{n - 1}$; the resulting encoding has length 
+\[
+    = (2mp_{n - 1} \log \frac{1}{2p_{n - 1}} + \sum_{i=1}^{n - 2}mp_i \log \frac{1}{p_i}) + mp{n - 1} + mp_{n}
+\]
+Note that we must add an extra factor of $mp{n - 1} + mp_{n}$ at the end to account for the fact that we have merged a node, and that the individual letters representing $p_{n - 1}$ and $p_n$ will require one extra letter after "unmerging".
+\[
+    = (2mp_{n - 1} (\log \frac{1}{p_{n - 1}} - 1) + \sum_{i=1}^{n - 2}mp_i \log \frac{1}{p_i}) + mp{n - 1} + mp_{n}
+\]
+\[
+    = (2mp_{n - 1} \log \frac{1}{p_{n - 1}} - 2mp_{n - 1} + \sum_{i=1}^{n - 2}mp_i \log \frac{1}{p_i}) + mp{n - 1} + mp_{n}
+\]
+\[
+    = (mp_{n - 1} \log \frac{1}{p_{n - 1}} + mp_{n - 1} \log \frac{1}{p_{n - 1}} - 2mp_{n - 1} + \sum_{i=1}^{n - 2}mp_i \log \frac{1}{p_i}) + mp{n - 1} + mp_{n}
+\]
+\[
+    = (mp_n \log \frac{1}{p_n} + mp_{n - 1} \log \frac{1}{p_{n - 1}} + \sum_{i=1}^{n - 2}mp_i \log \frac{1}{p_i}) - 2mp_{n - 1} + mp{n - 1} + mp_{n}
+\]
+\[
+    = (\sum_{i=1}^{n}mp_i \log \frac{1}{p_i}) - 2mp_{n - 1} + mp{n - 1} + mp_{n - 1}
+\]
+\[
+    = \sum_{i=1}^{n}mp_i \log \frac{1}{p_i}
+\]
+\textbf{For arbitrary distributions, when is the entropy the largest? When is it the smallest?}
+\\
+\\
+Entropy is largest in a uniform random distribution; smallest in a deterministic one ($p_i = 1; p_j = 0, \forall j \neq i)$.
+\end{problem}
+
+\begin{problem}{5.18}
+\textbf{Is the entropy of a distribution larger or smaller than the expected number of bits per letter in Huffman encoding?}
+\\
+\\
+In an optimal Huffman encoding, where all probabilities are a power of 2, the expected bits per letter is exactly equal to the entropy (see 5.16). However, deviation from powers of 2 increases the length of the Huffman encoding; thus in general the Huffman encoding has more bits per letter than the entropy. In general, entropy is a lower bound on the compressibility of any encoding scheme.
+\\
+\\
+\textbf{What features of the English language besides letters and their frequencies should a compression scheme take into account?}
+\\
+\\
+As a language, English is not just a random collection of bits--there are syntactical and semantic rules. A good compression scheme would take into account common words and letter patterns, as well as larger grammatical rules.
+\end{problem}
+
+\begin{problem}{5.28}
+\textbf{Show that a prefix-free encoding can be represented as a full binary tree}.
+\\
+\\
+Place letters at the leaves of the binary tree, and take the left branch to be 0 and the right branch to be 1. Follow the branching until you reach a leaf (letter).
+\\
+This is a full binary tree--each node has a sibling since there is no reason to have a single extension from any leaf node; the encoding can be shortened by simply removing any "dangling" nodes. Also, only the leaves correspond to elements, since no element is a prefix of another.
+\end{problem}
+
+\begin{problem}{5.32}
+\textbf{Show how to implement the greedy algorithm for Horn formula satisfiability in linear time using a graph.}
+\\
+\\
+Convert each literal in the formulas to a node. Add an edge from each literal on the LHS of a clause to each literal on the RHS. Call this graph $G$, then run the following algorithm:
+\begin{lstlisting}[mathescape=true]
+def hornSAT(G):
+    indegree = int[|V|]
+    for e = (u, v) in E:
+        indegree[v] += 1
+    Q = {}
+    for v in V:
+        if indegree[v] == 0:
+            Q.enqueue(v)
+    while Q not empty:
+        x = Q.dequeue()
+        x = true
+        for (x, y) in E:
+            indegree[y] -= 1
+            if indegree[y] == 0:
+                Q.enqueue(y)
+    return assignment if satisfying, else failure            
+\end{lstlisting}
+Any implication with indegree 0 has its LHS all assigned to true, which means it must also be true.
+\end{problem}
+
+\begin{problem}{5.33}
+\textbf{Show that there is an instance of the set cover problem where the optimal solution uses 2 sets, whereas the greedy uses $\log n$.}
+\\
+\\
+Consider a diagram with two rows of elements, where the sets are the top and bottom rows, along with sets of increasing size: $S_1$ = first two elements of row 1 and row 2, $S_2$ = next 2 elements of row 1 and row 2, $S_3$ = next 4 elements of row 1 and row 2, ... and so on. Clearly, the optimal set cover has 2 elements, the top and bottom rows. 
+\\
+\\
+However, the greedy algorithm will first take the set with $n / 2 + 1$ elements, then the set with $n / 4 + 1$, and then the set with $n / 8 + 1$, and so on until it chooses the set with $2 = 2^0 + 1$ elements. $n / 2 + 1 = 2^{\log_2 n - 1} + 1$, so the greedy uses a total of $\log n$ sets.
+\end{problem}
+
+\end{document}

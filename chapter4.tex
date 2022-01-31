@@ -1,0 +1,83 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{multicol} % for induction proofs :P
+\usepackage{minted} % code font
+\usepackage{listings}
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Exercise]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Custom Commands
+\renewcommand{\qed}{\quad\qedsymbol}
+
+% prevent line break in inline mode
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Heading
+\lhead{Rahul Shah and Sherry Fan}
+\rhead{CS 170}
+\chead{\textbf{Textbook Solutions}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{mdframed}[backgroundcolor=blue!20]
+Chapter 4 | Email any errors to rsha256@berkeley.edu
+\end{mdframed}
+ 
+\begin{problem}{4.16}
+\textbf{Find the parent/child indices of an array-based binary heap.}
+\\
+The parent of node $j$ is at $\lfloor{j}/2\rfloor$; the children are at $2j$ and $2j + 1$.
+\\
+\textbf{Find the parent/child indices of an array-based $d$-ary heap.}
+\\
+The parent of node $j$ is at $\lfloor{(j - 1) / d}\rfloor$; its children are $dj + 1, dj + 2, ..., d(j + 1)$.
+\\
+\textbf{Show that a heap can be constructed in $O(n)$ time.}
+\\
+Use bottom-up heapification: start from the bottom and bubble down each node that is in the incorrect position. This takes $n / 2 * 1$ work on the bottom level, $n / 4 * 2$ work on the second level, and so on, until $\log n$ work on the top level. Thus, the runtime is 
+    \[
+        n / 2 + n / 4 * 2 + ... + n / n * log n
+    \]
+    \[
+        = \sum_{i = 0}^{\log n} i \frac{n}{2^{i + 1}}
+    \]
+    \[
+        = n/2 * \sum_{i = 0}^{\log n} \frac{i}{2^i}
+    \]
+    \[
+        = n/2 * \sum_{i = 0}^{\log n} i * (\frac{1}{2})^i)
+    \]
+    \[
+        \leq n/2 * \frac{1/2}{(1 - 1/2)^2}
+    \]
+    \[
+        = n \in \Theta(n)
+    \]
+\textbf{How would you adapt \texttt{makeheap} to d-ary heaps?}
+\\ 
+Change the indices of the child/parent.
+\end{problem}
+\end{document}

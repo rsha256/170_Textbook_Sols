@@ -1,0 +1,251 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{multicol} % for induction proofs :P
+\usepackage{minted} % code font
+
+
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Exercise]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Custom Commands
+\renewcommand{\qed}{\quad\qedsymbol}
+
+% prevent line break in inline mode
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Heading
+\lhead{Rahul Shah}
+\rhead{CS 170}
+\chead{\textbf{Textbook Solutions}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{mdframed}[backgroundcolor=blue!20]
+Chapter 1 | Email any errors to rsha256@berkeley.edu
+\end{mdframed}
+
+\begin{problem}{1.1}
+    \textbf{WTS: In any base $b\geq2,$ the sum of any three single-digit numbers is at most 2 digits long.}
+    \\
+    A single digit in base $b$ is at most $b-1$, this can be seen via induction (ex. a digit in base $2$ is at most $1$ and a single digit in base $10$ is at most $9$).
+    
+\end{problem}
+
+
+\begin{problem}{1.2}
+    \textbf{Show that any binary integer is at most 4x as long as the corresponding decimal integer.
+    \\
+    For very large numbers, what is the ratio of these two lengths, approximately?}
+    \\
+    Length of binary integer (an int expressed in bin) is $\lfloor\log_2 x\rfloor + 1$ where $x:$ decimal value of the integer.
+    \\
+    Length of decimal integer is $\lceil\log_{10} x\rceil$ where $x$ is the decimal integer (integer expressed in base 10).
+    \[
+        \implies
+        \lfloor\log_2 x\rfloor + 1 \leq 4\cdot\lceil\log_{10} x\rceil
+    \]
+    \[
+        \implies
+        \lfloor\log_2 x\rfloor+1<\log_2 x +1
+    \]
+    \[
+        \implies
+        \log_2 x<\log_2 x +1
+    \]
+    \[
+        \implies
+        4 \cdot\lceil\log_{10} x\rceil >4\cdot\log_{10} x
+    \]
+    \[
+        \implies
+        \log_2 x\leq 4\cdot\log_{10} x
+    \]
+    \[
+        \implies
+        \log_{10} x = \frac{\log_2 x}{\log_2 10}
+    \]
+    \[
+        \implies
+        \boxed{
+          \log_2 x \cdot \log_2 10 \leq 4
+        }
+    \]
+\end{problem}
+
+\begin{problem}{1.5}
+    \textbf{Show that the harmonic series is $\Theta(log n)$}.
+    \\
+    Group the terms as such:
+    \[
+        (\frac{1}{1}) + (\frac{1}{2} + \frac{1}{3}) + (\frac{1}{4} + \frac{1}{5} + \frac{1}{6} + \frac{1}{7}) + ... (\frac{1}{2^{k - 1}} + \frac{1}{2^{k - 1} + 1} + ... + \frac{1}{2^k - 1} + \frac{1}{2^k})
+    \]
+    For an upper bound, consider the sequence
+    \[
+         (\frac{1}{1}) + (\frac{1}{2} + \frac{1}{2}) + (\frac{1}{4} + \frac{1}{4} + \frac{1}{4} + \frac{1}{4}) + ... (\frac{1}{2^k} + ... + \frac{1}{2^k})
+    \]
+    \[
+         = 1 * (\frac{1}{1}) + 2 * \frac{1}{2} + 4 * \frac{1}{4} + ... + 2^k * \frac{1}{2^k} 
+    \]
+    If n is not a power of 2, pad with some extra terms. In this sequence $k = \lceil \log_2n \rceil \leq \log_2n + 1$. Thus, $\sum_{i=1}^{n} \frac{1}{i} < 1 * (\log_2n + 1) = \Theta(\log n)$.
+    \\ \\
+     For an lower bound, consider the sequence
+    \[
+         (\frac{1}{2}) + (\frac{1}{4} + \frac{1}{4}) + (\frac{1}{8} + \frac{1}{8} + \frac{1}{8} + \frac{1}{8}) + ... (\frac{1}{2^{k - 1}} + ... + \frac{1}{2^{k - 1}})
+    \]
+    \[
+         = 1 * (\frac{1}{2}) + 2 * \frac{1}{4} + 4 * \frac{1}{8} + ... + 2^k * \frac{1}{2^{k - 1}} 
+    \]
+    Again, if n is not a power of two, truncate the extra terms. In this sequence, $k - 1 \leq \log_2 n$. Thus, $\sum_{i=1}^{n} \frac{1}{i} \geq 1 * (\frac{1}{2} * \log_2n) = \Theta(\log n)$.
+\end{problem}
+
+\begin{problem}{1.6}
+    \textbf{Prove that the standard multiplication algorithm works for binary numbers.}
+    \\
+    Consider some number in binary: $b = b_0 2^0 + b_1 2^1 + ... + b_n 2^n$ and its multiplicand $c$. 
+    \[
+         b * c = c b_0 2^0 + c b_1 2^1 + ... + c b_n 2^n
+    \]
+    This is exactly what the grade-school multiplication algorithm does: it multiplies $c$ by each digit in $b$, and shifts if by the appropriate amount (the same as multiplying by $2^k$).
+\end{problem}
+
+\begin{problem}{1.8}
+    \textbf{Justify the correctness of the recursive division algorithm, and show that it takes $O(n^2)$ time on n-bit inputs.}
+    \\
+    We induct on the number of bits in $x$. The base case is evident: a 0-bit number ($x = 0$) always has quotient and remainder 0. Suppose on a $(n - 1)$-bit number, the recursive division algorithm correctly returns $(q, r)$ such that $q * y + r = x$. 
+    \\
+    Consider an $n$-bit number $x$. By the inductive hypothesis, \texttt{divide(x/2, y)} returns $q', r'$ such that $q'y + r' = \lfloor x/2 \rfloor$.
+    If x is even, $x = 2q'y + 2r'$, and $r = 2r'$, $q = 2q'$. If x is odd, $x = 2q'y + 2r' + 1$, and and $r = 2r' + 1$, $q = 2q'$. This is exactly the return value of the algorithm, proving its correctness.
+    \\
+    The only last thing we have to consider is if $r \geq y$. But in this case, $x = qy + r = y(q + 1) + (r - y)$, which gives us a new remainder $r - y$ and quotient $q + 1$.
+\end{problem}
+
+\begin{problem}{1.11}
+    \textbf{Is $4^{1536} - 9^{4824}$ divisible by $35$?}
+    \\
+    We can use CRT:
+    \[
+        4^{1536} - 9^{4824} \equiv (-1)^{1536} - (-1)^{4824} \pmod 5
+    \]
+    \[
+        4^{1538} - 4^{2412} \pmod 7
+    \]
+\end{problem}
+
+\begin{problem}{1.12}
+    \textbf{What is $2^{2^{2006}} \pmod 3$?}
+    \\
+    We can use FLT:
+    \[
+        2^{2^{2006}} \equiv 2^{4012} \ \boxed{\equiv 1 \pmod 3}
+    \]
+    as 2 to an even power is 1 in mod 3.
+\end{problem}
+
+\begin{problem}{1.13}
+    \textbf{Is the difference of $5^{30,000}$ and $6^{123,456}$ a multiple of $31$?}
+    \\
+    We can use FLT: $a^{p-1}\equiv 1 \pmod p$
+    \[
+        (5^{30,000} - 6^{123,456}) \pmod{31}
+    \]
+    \[
+        \equiv (5^{30,000} \pmod{31}) - (6^{123,456} \pmod{31})
+    \]
+    \[
+        \equiv (5^{30\cdot 1,000} \pmod{31}) - (6^{123,456} \pmod{31})
+    \]
+    \[
+        \equiv (1^{1000} - (6^{123,456}) \pmod{31})
+    \]
+    \[
+        26 \neq 0
+    \]
+    So we can see the difference \textbf{is} a multiple of 31.
+\end{problem}
+
+\begin{problem}{1.14}
+    \textbf{Is the difference of $5^{30,000}$ and $6^{123,456}$ a multiple of $31$?}
+    \\
+    We can use FLT:
+    \[
+        (5^{30,000} - 6^{123,456}) \pmod{31}
+    \]
+    \[
+        \equiv (5^{30,000} \pmod{31}) - (6^{123,456} \pmod{31})
+    \]
+    \[
+        \equiv (5^{30\cdot 1,000} \pmod{31}) - (6^{123,456} \pmod{31})
+    \]
+    \[
+        26 \neq 0
+    \]
+    So we can see the difference \textbf{is} a multiple of 31.
+\end{problem}
+
+\begin{problem}{1.20}
+    \textbf{Find the inverse of: $20 \bmod 79, 3 \bmod 62, 21 \bmod 91, 5 \bmod 23$.}
+    \\
+    We can use FLT:
+    \[
+        (5^{30,000} - 6^{123,456}) \pmod{31}
+    \]
+    \[
+        \equiv (5^{30,000} \pmod{31}) - (6^{123,456} \pmod{31})
+    \]
+    \[
+        \equiv (5^{30\cdot 1,000} \pmod{31}) - (6^{123,456} \pmod{31})
+    \]
+    \[
+        26 \neq 0
+    \]
+    So we can see the difference \textbf{is} a multiple of 31.
+\end{problem}
+
+\begin{problem}{1.29}
+    \textbf{For each say whether it is universal, and determine how many random bits are needed to choose a function from the family.}
+    \\
+    We can use FLT:
+    \[
+        (5^{30,000} - 6^{123,456}) \pmod{31}
+    \]
+    \[
+        \equiv (5^{30,000} \pmod{31}) - (6^{123,456} \pmod{31})
+    \]
+    \[
+        \equiv (5^{30\cdot 1,000} \pmod{31}) - (6^{123,456} \pmod{31})
+    \]
+    \[
+        26 \neq 0
+    \]
+    So we can see the difference \textbf{is} a multiple of 31.
+\end{problem}
+
+\begin{problem}{1.34}
+    \textbf{Suppose a particular coin has a probability $p$ of coming up heads. How many times must you toss it on average before it comes up heads?}
+    \\
+    $1/p$. (This is a geometric distribution).
+\end{problem}
+
+\end{document}

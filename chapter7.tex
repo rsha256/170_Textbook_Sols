@@ -1,0 +1,121 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{multicol} % for induction proofs :P
+\usepackage{minted} % code font
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,breaklines=true}
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Exercise]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Custom Commands
+\renewcommand{\qed}{\quad\qedsymbol}
+
+% prevent line break in inline mode
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Heading
+\lhead{Rahul Shah and Sherry Fan}
+\rhead{CS 170}
+\chead{\textbf{Textbook Solutions}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{mdframed}[backgroundcolor=blue!20]
+Chapter 7 | Email any errors to sherryfansf@berkeley.edu
+\end{mdframed}
+
+\begin{problem}{7.25}
+    \textbf{Write the max flow problem as a linear program.} \\
+    We represent the flow along a s-t path as a variable $x_p$.
+    \[
+        \max \sum_p x_p
+    \]
+    \[
+        x_p \geq 0; \forall e
+    \]
+    \[
+        \sum_{p: e \in p} x_p \leq c_e; \forall e
+    \]
+    
+    \textbf{Find the dual of the LP max flow problem.}
+    \[
+        \min \sum_e c_ey_e
+    \]
+    \[
+        \sum_{e \in p} y_e \geq 1
+    \]
+    \[
+        y_e \geq 0
+    \]
+    
+    \textbf{Interpret the dual LP.} \\
+    The dual LP can be seen as finding a min cut on the graph. An edge is included in the cut iff $y_e = 1$. We minimize over the sum of included edges, and ensure that across any s-t path, at least one edge on this path is chosen.
+\end{problem}
+
+\begin{problem} {7.28}
+    \textbf{Show that finding a shortest s-t path is equivalent to finding a flow of size 1 minimizing $\sum_e l_ef_e$ with no capacity constraints.} \\
+    We can interpret the flow found as follows: if an edge has 1 unit of flow, include it in the shortest path; otherwise do not. Clearly, this minimizes the sum of edges along any s-t path, and finds the shortest path. \\ \\
+    \textbf{Write the shortest path problem as an LP}. \\
+    \[
+        \min \sum_e l_ef_e
+    \]
+    \[
+        \sum_{e=(u, v)} f_e - \sum_{e=(v, w)} f_e \geq 0, \forall v \neq s, t
+    \]
+    \[
+        \sum_{e = (v, t)} f_e \geq 1
+    \]
+    
+    \textbf{Find the dual of this LP.} \\
+    \[
+        \max x_t
+    \]
+    \[
+        x_v - x_u \leq f_{e = (u, v)}
+    \]
+    \[
+        x_v \geq 0
+    \]
+\end{problem}
+
+\begin{problem}{7.31}
+\textbf{Show how to find the fattest s-t path using a variant of Dijkstra's algorithm.}
+\begin{lstlisting}
+    widest = int[v]
+    queue = []
+    while queue:
+        v = queue.dequeue()
+        for w in G[v]:
+            if widest[w] < min(cap(v, w), widest[v]):
+                widest[w] = min(cap(v, w), widest[v])
+\end{lstlisting}
+
+\textbf{Show that the maximum flow in $G$ is a sum of individual flows along at most $|E|$ paths from s to t.} \\
+Take the edge $e = (u, v)$ with minimum flow $f_e$. If it is part of a cycle, remove $f_e$ units of flow from each edge in the cycle. If it is part of a path, remove $f_e$ units of flow from each edge in the path. This maintains conservation of flow: the net flow into $u$ is decreased by $f_e$ and so it the net outflow; similarly for $v$. Remove this edge from the graph and repeat--after at most $|E|$ iterations, all edges will be gone and the graph will be decomposed into the paths/cycles found during this process. \\ \\
+
+\textbf{Show that increasing the flow along the fattest path allows Ford-Fulkerson to terminate in at most O($|E| \log F$) iterations}. \\
+Suppose the max flow has size $|F|$. Let $F_k$ be the amount of flow left to reach the max flow, in the $k$th iteration. Since the max flow can be decomposed into at most $|E|$ paths, the fattest path must have flow greater than or equal to $|F| / |E|$. Pushing flow along this path results in $F_{k + 1} = (1 - 1 / |E|)F_k$. Using induction, we can see that $F_{k}$ reaches 0 when $k = E log F$, meaning we terminate after that many iterations.
+\end{problem}
+\end{document}

@@ -1,0 +1,151 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{multicol} % for induction proofs :P
+\usepackage{minted} % code font
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,breaklines=true}
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Exercise]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Custom Commands
+\renewcommand{\qed}{\quad\qedsymbol}
+
+% prevent line break in inline mode
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Heading
+\lhead{Rahul Shah and Sherry Fan}
+\rhead{CS 170}
+\chead{\textbf{Textbook Solutions}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{mdframed}[backgroundcolor=blue!20]
+Chapter 3 | Email any errors to rsha256@berkeley.edu
+\end{mdframed}
+
+\begin{problem}{3.5}
+    \textbf{Show how to reverse a graph in linear time}.
+    \begin{lstlisting}
+        def reverse(G):
+            reverse = int[v]
+            for v in V:
+                for w in G[v]:
+                    reverse[w] = v
+            return reverse
+    \end{lstlisting}
+\end{problem}
+
+\begin{problem}{3.14}
+    \textbf{Show that repeatedly removing source nodes from the graph generates a topological sort in linear time.}
+    \begin{lstlisting}
+        def toposort(G = (V, E)):
+            for v in V: 
+                in[v] = 0
+            for (u, v) in E:
+                in[v] += 1
+            sources = []
+            for v in V:
+                if in[v] = 0:
+                    sources.add(v)
+            while sources:
+                u = sources.pop()
+                for (v, u) in E:
+                    in[v] -= 1
+                    if in[v] = 0:
+                        sources.add(v)
+    \end{lstlisting}
+    This algorithm runs in O(V + E) time, since each node is enqueued/dequeue at most once, and each edge is explored once.
+\end{problem}
+
+\begin{problem}{3.26}
+    \textbf{Show that an undirected graph has an Eulerian tour if and only if all its vertices have even degree.}
+    \\
+    If there is an Eulerian tour, then whenever you enter a vertex, you must be able to exit it with another edge. This is true for all vertices (including the start, since you exit it at the beginning and enter it at the end of the tour). Thus, the edges are paired, which means each vertex has even degree.
+    \\
+    To prove that even degree $\implies$ Eulerian tour, we use induction on the number of edges. The base case of a single node with no edges is evident; the tour is the node itself. 
+    \\
+    Suppose on a graph with $k < n$ edges, even degree implies a Eulerian tour exists. Consider a graph with $n$ edges. Pick a random start node, and keep following unused edges until you return to the start. (You must return to the start since the graph is connected, so there is some path $u \rightarrow v \rightarrow ... \rightarrow v$).
+    \\
+    Remove all edges associated with this tour $T$. If it's a Eulerian tour, you're done. Otherwise, you'll be left with some connected components. Since any tour has even incidences along all vertices, the connected components still have even degree. By the inductive hypothesis, each of these connected components has a Eulerian tour.
+    \\
+    Construct the Eulerian tour on $n$ edges by following $T$, and taking the Eulerian tour in these subcomponents when one of them is reached. This shows that if a graph is connected and of even degree, a Eulerian tour exists.
+    \\
+    \\
+    \textbf{An Eulerian path is a path which uses each edge exactly once. Can you give a similar if-and-only-if characterization of which undirected graphs have Eulerian paths?}
+    \\
+    There is a Eulerian path iff all vertices except two have even degree.
+    \\
+    \\
+    \textbf{Can you give an analog of part (a) for directed graphs?}
+    \\
+    A directed graph has a Eulerian tour iff each vertex has even indegree and outdegree.
+\end{problem}
+
+
+\begin{problem}{3.28}
+    \textbf{2SAT and Graphs}
+    \[
+        (x_1 \lor \bar{x_2}) \wedge (\bar{x_1} \lor \bar{x_3}) \wedge (x_1 \lor x_2) \wedge (\bar{x_3} \lor x_4) \wedge (\bar{x_1} \lor \bar{x_4})
+    \]
+    \textbf{Find all satisfying assignments of this 2SAT formula.}
+    \\
+    \texttt{true}, \texttt{false}, \texttt{false}, \texttt{true}
+    \\
+    \texttt{true}, \texttt{true}, \texttt{false}, \texttt{true}
+    \\
+    \\
+    \textbf{Give an instance of 2SAT with four variables and no satisfying assignment.}
+    \[
+        (x \lor x) \wedge (\bar{x} \lor \bar{x}) \wedge (y \lor z) \wedge (z \lor w)
+    \]
+    \textbf{For each clause in the 2SAT formula, convert $(a \lor b)$ into the edges $(\bar{a}, b)$ and $(\bar{b}, a)$. Show that if the graph representation has an SCC with both $x$ and $\bar{x}$, there is no satisfying assignment.}
+    \\
+    The graph $G_I$ described above records all implications in $I$, since $(a \lor b)$ is equivalent to $\bar{a} \implies b$ and $\bar{b} \implies a$. If both $x$ and $\bar{x}$ are in the same SCC, that means there is some series of implications $x \implies ... \implies \bar{x}$ or some series of implications $\bar{x} \implies ... \implies x$. One of these is the implication $true \implies false$, which is false.
+    \\
+    \\
+    \textbf{Show the converse of the above statement: if none of $G_I$'s SCCs contain a literal and its negation, the instance I is satisfiable.}
+    \\
+    Repeatedly pick a sink SCC of $G_I$. Then, assign \texttt{true} to all nodes in that sink, \texttt{false} to their negations, and remove all assigned variables. 
+    \\
+    Since $G_I$ records the implications in $I$, assigning \texttt{true} to all sink variables ensures all the implications are of the form $... \implies true$. By the way the graph is defined, there must also be some source SCC containing negations of all the variables in the sink. Since we assign in reverse topological order, there is never an implication $true \implies false$. Since a variable and its negation are never in the same SCC, a variable is never assigned to \texttt{true} and \texttt{false} at the same time.
+    \\
+    This algorithm runs in linear time (since finding SCCs is linear time). 
+
+\end{problem}
+
+\begin{problem}{3.30}
+    \textbf{Show that connectedness is an equivalence relation which partitions vertices into SCCs.}
+    \\
+    \textit{Reflexivity}: A vertex is always connected to itself.
+    \\
+    \textit{Symmetry}: By definition, $u$ and $v$ are connected if there is a path $u$ to $v$ and a path $v$ to $u$. Thus, if $u$ is connected to $v$, then $v$ must be connected to $u$.
+    \\
+    \textit{Transitivity}: If $u$ is connected to $v$ and $v$ to $w$, there must be a path $u \rightarrow ... \rightarrow v \rightarrow ... \rightarrow w$. Thus, $u$ is also connected to $w$. (Similarly for the reverse direction).
+    \\
+    Equivalence relations partition a set S into disjoint groups such that any two members of a group are related, and any members not in the same group are not related. Thus, the equivalence relation of connectedness partitions $V$ into disjoint sets, in which each vertex is connected to all other vertices in that set.
+\end{problem}
+
+\end{document}

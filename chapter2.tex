@@ -1,0 +1,204 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not alter this block (unless you're familiar with LaTeX
+\documentclass{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts, fancyhdr, color, comment, graphicx, environ}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{multicol} % for induction proofs :P
+\usepackage{minted} % code font
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,breaklines=true}
+
+\pagestyle{fancy}
+
+
+\newenvironment{problem}[2][Exercise]
+    { \begin{mdframed}[backgroundcolor=gray!20] \textbf{#1 #2} \\}
+    {  \end{mdframed}}
+
+% Custom Commands
+\renewcommand{\qed}{\quad\qedsymbol}
+
+% prevent line break in inline mode
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Heading
+\lhead{Rahul Shah}
+\rhead{CS 170}
+\chead{\textbf{Textbook Solutions}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{mdframed}[backgroundcolor=blue!20]
+Chapter 2 | Email any errors to rsha256@berkeley.edu
+\end{mdframed}
+
+\begin{problem}{2.2}
+\textbf{Show that for any positive integers n and any base b, there must be some power of b lying in the range $[n, bn]$}.
+\\
+Let $x = b^{\lfloor \log_b n \rfloor}$ be the smallest power of $b$ less than or equal to $n$. $bx = b^{\lfloor \log_b n \rfloor + 1} \geq b^{\log_b n} = n$. Also, since by definition $x \leq n$, $bx \leq bn$. Thus, $bx$ is in the range $[n, bn]$.
+\end{problem}
+
+\begin{problem}{2.11}
+    \textbf{Show that block matrix multiplication is valid.}
+    \\
+    In the multiplication $XY = Z$, consider any entry $z_{ij}$ of Z.
+    \[
+        X = 
+        \begin{bmatrix}
+        A & B \\ C & D
+        \end{bmatrix}, 
+        Y = 
+        \begin{bmatrix}
+        E & F \\ G & H
+        \end{bmatrix}
+    \]
+    Suppose $i, j < n / 2$.
+    \[
+        z_{ij} = \sum_{k = 1}^{n} x_{ik}y_{kj} = \sum_{k = 1}^{n / 2} x_{ij}y_{kj} + \sum_{k = n / 2 + 1}^{n} x_{ij}y_{kj} = \sum_{k = 1}^{n / 2} a_{ij}e_{kj} + \sum_{k = n / 2 + 1}^{n} b_{ij}g_{kj}
+    \]
+    A similar proof can be done for the other 3 entries.
+\end{problem}
+
+\begin{problem}{2.13}
+    \textbf{Find the number of binary trees on 3, 5, and 7 vertices}. \\
+    $B_3 = 1, B_5 = 2, B_7 = 5.$ \\ \\
+    \textbf{Find a general recurrence for $B_n$}.
+    \[
+        B_n = \sum_{i = 1}^{n} B_{i - 1}B_{n - i}
+    \]
+    \textbf{Show by induction that $B_n \in \Omega(2^n).$} \\
+    We will show more specifically that $B_n \geq c 2^{n}$. \\
+    The base cases hold if we choose some $c \leq 2^{-5}$:
+    \[
+        B_3 = 1 \geq 2^{-2}
+    \]
+    \[
+        B_5 = 2 \geq 2^0
+    \]
+    \[
+        B_7 = 5 \geq 2^2
+    \]
+    Assuming this holds for any $7 < k < n$, consider $B_n.$
+    \[
+        B_n = \sum_{i = 1}^{n} B_{i - 1}B_{n - i}
+    \]
+    \[
+        \geq \sum_{i = 1}^{n} c * 2^{i - 1} * 2^{n - i}
+    \]
+    \[
+        = c \sum_{i = 1}^{n} 2^{n - 1}
+    \]
+    \[
+        = cn * 2^{n - 1}
+    \]
+    Since $n \geq 8$,
+    \[
+        cn * 2^{n - 1} \geq c * 2^{n + 2} \geq c2^n
+    \]
+\end{problem}
+
+\begin{problem}{2.15}
+\textbf{Show how to implement the \texttt{split} operation (which splits numbers according to the pivot) in place.}
+    \begin{lstlisting}
+        def split(arr, pivot):
+            n = len(arr)
+            i, j = 0, n - 1
+            while i < j:
+                if arr[i] >= pivot and arr[j] < pivot:
+                    arr[i], arr[j] = arr[j], arr[i]
+                    i, j = i + 1, j - 1
+                elif arr[i] >= pivot:
+                    j -= 1
+                elif arr[j] < pivot:
+                    i += 1
+                else:
+                    i, j = i + 1, j - 1
+    \end{lstlisting}
+\end{problem}
+
+\begin{problem}{2.24}
+    \textbf{Write down the code for quicksort.}
+     \begin{lstlisting}
+        def quicksort(arr):
+            if not arr: return []
+            pivot, l, e, r = arr[0], [], [], []
+            for x in arr:
+                if x < pivot: l.append(x)
+                elif x = pivot: e.append(x)
+                else: r.append(x)
+            return quicksort(l) + e + quicksort(r)
+    \end{lstlisting}
+    \textbf{Show that the worst-case runtime for quicksort is $\Theta(n^2)$.}
+    \\
+    Suppose the pivot is always the smallest/largest element. Then the array gets reduced by 1 each time. The total runtime is $1 + 2 + 3 + ... + n = \Theta(n^2)$.
+    \\ \\
+    \textbf{Show that the expected runtime of quicksort is $O(n \log n)$.}
+    \\
+    The expected runtime satisfies the recurrence relation
+    \[
+        T(n) \leq Bn + \frac{1}{n}\sum_{1}^{n - 1} (T(i) - T(n - i))
+    \]
+    \[
+        = Bn + \frac{2}{n}\sum_{1}^{n - 1} T(i)
+    \]
+    \[
+        nT(n) \leq Bn^2 + 2\sum_{1}^{n - 1} T(i)
+    \]
+    \[
+        (n - 1)T(n - 1) \leq B(n - 1)^2 + 2\sum_{1}^{n - 2} T(i)
+    \]
+    Subtract the bottom equation from the top equation.
+    \[
+        nT(n) - (n - 1)T(n - 1) \leq 2Bn - B + 2T(n - 1)
+    \]
+    \[
+        nT(n) \leq (n + 1)T(n - 1) + 2Bn - B
+    \]
+    \[
+        nT(n) \leq (n + 1)T(n - 1) + 2Bn - B
+    \]
+    Solving the recurrence relation gives us that $T(n) = O(n \log n)$.
+\end{problem}
+
+\begin{problem}{2.29}
+    \textbf{Show that Horner's rule for polynomial evaluation gives the correct answer.}
+    \\
+    We use induction. Our loop invariant: at the end of the $i$th loop 
+    $z = a_nx^i + a_{n - 1}x^{i - 1} + ... + a_{n - i}$.
+    \\
+    The base case is clear: the algorithm simply returns $a_0$ at the end of the 0th loop.
+    \\
+    Suppose our loop invariant is true for the $(i - 1)$st loop. Consider the $i$-th loop. By our loop invariant, we know that $z = a_nx^{i - 1}+ a_{n - 1}x^{i - 2} + ... + a_{n - i + 1}$. Inside the loop, we multiply $zx$, then add $a_{i}$, giving us $z = a_nx^i + a_{n - 1}x^{i - 1} + ... + a_{n - i + 1}x + a_{n - i}$, proving our invariant.
+    \\
+    Applying our invariant to when $i = n$, we get that $z = a_nx^n + a_{n - 1}x^{n - 1} + ... + a_0$ at the end of the last loop, correctly evaluating our polynomial.
+    \\ \\
+    \textbf{How may additions and multiplications does this routine use?}
+    \\
+    Horner's rule uses about O(n) additions and multiplications (one per loop). This is bad for sparse polynomials, in which most of the coefficients are 0 (for example $2x^{100} + 1$).
+\end{problem}
+
+\begin{problem}{2.20}
+\textbf{Show that any array of integers$x[1...n]$ can be sorted in $O(n + M)$ time, where}
+    \[
+    M = \max_i x_i - \min_i x_i.
+    \]
+    Create an array \texttt{a} of size M. Use this array to count the number of each $x_i$ you see: \texttt{a[0]} corresponds to the smallest possible integer, \texttt{a[1]} counts the the second smallest, and so on, until \texttt{a[n - 1]} which counts the largest integer. Then, simply fill a sorted array based off the counts, starting from \texttt{a[0]}.
+    \\
+    Note that this sort uses no comparisons, so it is not lower-bounded by $\Omega(n \log n)$.
+\end{problem}
+
+\end{document}
