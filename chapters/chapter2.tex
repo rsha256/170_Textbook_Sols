@@ -51,17 +51,17 @@ Let $x = b^{\lfloor \log_b n \rfloor}$ be the smallest power of $b$ less than or
         B_n = \sum_{i = 1}^{n} B_{i - 1}B_{n - i}
     \]
     \[
-        \geq \sum_{i = 1}^{n} c * 2^{i - 1} * 2^{n - i}
+        \geq \sum_{i = 1}^{n} \cdot 2^{i - 1} * 2^{n - i}
     \]
     \[
         = c \sum_{i = 1}^{n} 2^{n - 1}
     \]
     \[
-        = cn * 2^{n - 1}
+        = cn \cdot 2^{n - 1}
     \]
     Since $n \geq 8$,
     \[
-        cn * 2^{n - 1} \geq c * 2^{n + 2} \geq c2^n
+        cn \cdot 2^{n - 1} \geq c \cdot 2^{n + 2} \geq c2^n
     \]
 \end{problem}
 
