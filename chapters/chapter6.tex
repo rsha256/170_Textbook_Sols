@@ -4,7 +4,7 @@
     \textbf{Given an umlimited supply of coins of denominations $x_1, x_2, ... x_n$, give a dynamic programming algorithm to decide if it is possible to make change for some quantity $V$}. \\
     Subproblem: $f(i, v)$ = if it is possible to make change for $v$ using denominations $x_1, x_2, ... x_i$ \\
     Solution: $f(n, V)$ \\
-    Base case: $f(0, 0) = true$; $f(0, v) = false, v \neq 0$ \\
+    Base case: $f(0, 0) = \text{true}$; $f(0, v) = \text{false}, v \neq 0$ \\
     Recurrence: $f(i, v) = f(i - 1, v)$ or $f(i, v - x_i) $ \\
     Order: increasing order of $i$, $v$ \\
     Time complexity: $O(nV)$ \\
@@ -15,7 +15,7 @@
     \textbf{Solve the coin change problem from above where you are only allowed to use one of each denomination.}. \\
     Subproblem: $f(i, v)$ = if it is possible to make change for $v$ using denominations $x_1, x_2, ... x_i$ \\
     Solution: $f(n, V)$ \\
-    Base case: $f(0, 0) = true$; $f(0, v) = false, v \neq 0$ \\
+    Base case: $f(0, 0) = \text{true}$; $f(0, v) = \text{false}, v \neq 0$ \\
     Recurrence: $f(i, v) = f(i - 1, v)$ or $f(i - 1, v - x_i) $ \\
     Order: increasing order of $i$, $v$ \\
     Time complexity: $O(nV)$ \\
@@ -63,7 +63,7 @@
 \begin{problem}
     \textbf{Solve the problem from 6.26 where your goal is to find a maximum-scoring substring.}
     Subproblem: $f(i, j)$ = score of best alignment of a suffix of $x[1...i]$, $y[1...j]$ \\
-    Solution: $max_{i, j} f(i, j)$ \\
+    Solution: $\max_{i, j} f(i, j)$ \\
     Base case: $f(0, j) = 0$; $f(i, 0) = 0$ \\
     Recurrence: $f(i, j) = \max(f(i - 1, j) + \delta(x[i],\_\_)), f(i, j - 1) + \delta(\_\_, y[j])), f(i - 1, j - 1) + \delta(x[i], y[j]))$ \\
     Time complexity: $O(mn)$ \\

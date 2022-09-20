@@ -78,14 +78,14 @@
     \]
     \textbf{For each clause in the 2SAT formula, convert $(a \lor b)$ into the edges $(\bar{a}, b)$ and $(\bar{b}, a)$. Show that if the graph representation has an SCC with both $x$ and $\bar{x}$, there is no satisfying assignment.}
     \\
-    The graph $G_I$ described above records all implications in $I$, since $(a \lor b)$ is equivalent to $\bar{a} \implies b$ and $\bar{b} \implies a$. If both $x$ and $\bar{x}$ are in the same SCC, that means there is some series of implications $x \implies ... \implies \bar{x}$ or some series of implications $\bar{x} \implies ... \implies x$. One of these is the implication $true \implies false$, which is false.
+    The graph $G_I$ described above records all implications in $I$, since $(a \lor b)$ is equivalent to $\bar{a} \implies b$ and $\bar{b} \implies a$. If both $x$ and $\bar{x}$ are in the same SCC, that means there is some series of implications $x \implies ... \implies \bar{x}$ or some series of implications $\bar{x} \implies ... \implies x$. One of these is the implication true $\implies$ false, which is false.
     \\
     \\
     \textbf{Show the converse of the above statement: if none of $G_I$'s SCCs contain a literal and its negation, the instance I is satisfiable.}
     \\
     Repeatedly pick a sink SCC of $G_I$. Then, assign \texttt{true} to all nodes in that sink, \texttt{false} to their negations, and remove all assigned variables. 
     \\
-    Since $G_I$ records the implications in $I$, assigning \texttt{true} to all sink variables ensures all the implications are of the form $... \implies true$. By the way the graph is defined, there must also be some source SCC containing negations of all the variables in the sink. Since we assign in reverse topological order, there is never an implication $true \implies false$. Since a variable and its negation are never in the same SCC, a variable is never assigned to \texttt{true} and \texttt{false} at the same time.
+    Since $G_I$ records the implications in $I$, assigning \texttt{true} to all sink variables ensures all the implications are of the form $... \implies$ true. By the way the graph is defined, there must also be some source SCC containing negations of all the variables in the sink. Since we assign in reverse topological order, there is never an implication true $\implies$ false. Since a variable and its negation are never in the same SCC, a variable is never assigned to \texttt{true} and \texttt{false} at the same time.
     \\
     This algorithm runs in linear time (since finding SCCs is linear time). 
 
