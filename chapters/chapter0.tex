@@ -48,7 +48,8 @@
         \implies
         (\log n)^{\log n}\ll n^{\log n}$.
         % q
-        \item $\displaystyle\sum_{i=1}^n i^k = O(n^{k+1})$, each summation term increases $\therefore n^k$ dominates and $n^k\ll n^{k+1},$ akin to $n^2\land n^3$.
+        \item $\displaystyle\sum_{i=1}^n i^k = O(n^{k+1})$, as $\displaystyle\lim_{n\to\infty} \frac{\sum_{i=1}^n i^k}{n^{k+1}} = \lim_{n\to\infty} \frac{1 + 2^k + 
+        \cdots + (n-1)^k + n^k}{n^{k+1}} = 0$ and $n^{k+1}\gg n^k$.
     \end{enumerate}
 \end{problem}
 
